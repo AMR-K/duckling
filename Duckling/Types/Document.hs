@@ -121,9 +121,13 @@ isRangeValid doc start end =
   (end == length doc ||
       isDifferent (doc ! (end - 1)) (doc ! end))
   where
+-- This list isn't exhasutive since Arabic have some diacritics and rarely used characters in Unicode
+    isArabic :: Char -> Bool
+    isArabic c = elem c ['ا', 'ب', 'ت', 'ة', 'ث', 'ج', 'ح', 'خ', 'د', 'ذ', 'ر', 'ز', 'س', 'ش', 'ص', 'ض', 'ط', 'ظ', 'ع', 'غ', 'ف', 'ق', 'ك', 'ل', 'م', 'ن', 'ه', 'و', 'ي', 'ء', 'آ', 'أ', 'إ', 'ؤ', 'ئ', 'ى']
+
     charClass :: Char -> Char
     charClass c
-      | Char.isLower c || Char.isUpper c = 'c'
+      | Char.isLower c || Char.isUpper c || isArabic c = 'c'
       | Char.isDigit c = 'd'
       | otherwise = c
     isDifferent :: Char -> Char -> Bool
